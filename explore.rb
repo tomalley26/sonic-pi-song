@@ -4,10 +4,29 @@
 use_debug false
 use_bpm 130
 
+# Live coding instructions:
+
+# Beat is always on (no stop keyword), but you can change the amp of
+# the kick and hi hat for different effects.
+
+# In my example song, I added in the prelude to bassline for a few
+# seconds, then stopped that and added the bassline.
+
+# Then, I turned on the synth beeps. You can experiment with different
+# volumes for those synth beeps, play them together, or choose one
+
+# I then stopped the bassline and replaced it with the wobble bassline
+
+# Then I started the piano chords
+
+# After that, I experimented with taking away certain parts of the beat
+# And basically just found a creative way to take away song elements
+# one at a time until I found a good outro.
+
 # Beat starts here
 
 live_loop :snares do
-  sample :drum_snare_soft, amp: 0
+  sample :drum_snare_soft, amp: 1
   sleep 2
 end
 
@@ -17,10 +36,10 @@ with_fx :reverb, room: 0.1 do
     
     live_loop :beat do
       # make amp of bd_haus 0 to get rid of bass kick
-      sample :bd_haus, rate: 0.7, amp: 0
-      #sample :bass_hit_c, rate: 1, amp: 3
+      sample :bd_haus, rate: 0.7, amp: 0.5
+      # make amp of drum_cymbal_soft 0 to get rid of hi hat sound
       sleep 0.5
-      sample :drum_cymbal_soft, rate: 1.98, amp: 0, sustain: 0.1, release: 0.2
+      sample :drum_cymbal_soft, rate: 1.98, amp: 1, sustain: 0.1, release: 0.2
       sleep 0.5
       
     end
@@ -30,6 +49,8 @@ end
 # Prelude to bassline
 
 live_loop :prebass do
+  # for each live_loop, uncomment and comment stop keyword
+  # to add element into song
   stop
   sync :beat
   use_synth :fm
@@ -148,8 +169,11 @@ end
 # Synth beeps
 
 live_loop :synth do
-  #stop
-  #sync :beat
+  # for the synth live loops, they are always playing
+  # so that they can be in sync with the beat,
+  # but you can change their amplitude to effectively
+  # "start" or "stop" them
+  
   with_fx :reverb, mix: 0.4, room: 0.6, damp: 0.8 do
     with_synth :sine do
       play chord( :d5, :min), release: 0.4, amp: 0
@@ -163,8 +187,7 @@ live_loop :synth do
 end
 
 live_loop :synthTwo do
-  #stop
-  #sync :synth
+  
   with_fx :reverb, mix: 0.4, room: 0.6, damp: 0.8 do
     with_synth :dsaw do
       play chord( :d5, :min), release: 0.4, amp: 0
